@@ -2,7 +2,7 @@ class PrototypesController < ApplicationController
   before_action :prototype_user, only: [:edit, :show]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :move_to_index, except: [:index, :show]
-  before_action :cheak_user, except: [:index, :show]
+  before_action :cheak_user, only: [:edit]
 
   def index
     @prototype = Prototype.includes(:user)
@@ -59,7 +59,7 @@ end
 
   
   def cheak_user
-    unless  current_user.id == @prototype.user.id
+    unless  current_user == @prototype.user
       redirect_to action: :index
     end
   end
